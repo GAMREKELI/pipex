@@ -6,28 +6,26 @@ void	ft_dup(int fd1, int fd2)
 	dup2(fd2, 1);
 }
 
+void	check_command(t_pipex_b *pipex)
+{
+	if (!pipex->command)
+	{
+		ft_clean_main(*pipex);
+		free(pipex->path);
+		exit(1);
+	}
+}
+
 void	ft_error(t_pipex_b *pipex)
 {
 	ft_close(pipex);
 	if (pipex->here_doc == 1)
 		unlink(".heredoc_tmp");
-	if (sizeof(pipex->pip) != 0)
+	if (pipex->pip)
 		free(pipex->pip);
 	if (pipex->path)
-		free(pipex->path);	
+		free(pipex->path);
 	exit(1);
-}
-
-void	close_pipes(t_pipex_b *pipex)
-{
-	int	i;
-
-	i = 0;
-	while (i < (pipex->pipe_num))
-	{
-		close(pipex->pip[i]);
-		i ++;
-	}
 }
 
 void	create_pipe(t_pipex_b *pipex_b)
@@ -35,7 +33,7 @@ void	create_pipe(t_pipex_b *pipex_b)
 	int	i;
 
 	i = 0;
-	while(i < (pipex_b->pipe_num - 1))
+	while (i < (pipex_b->pipe_num - 1))
 	{
 		if (pipe(pipex_b->pip + 2 * i) < 0)
 			ft_clean_main(*pipex_b);
@@ -48,7 +46,7 @@ int	main(int argc, char **argv, char **envp)
 	t_pipex_b	pipex_b;
 
 	pipex_b.num_child = -1;
-	infile(&pipex_b, argv);
+	infile(&pipex_b, argv, argc);
 	outfile(&pipex_b, argv, argc);
 	pipex_b.number_cmd = argc - 3 - pipex_b.here_doc;
 	pipex_b.pipe_num = 2 * (pipex_b.number_cmd - 1);
@@ -59,15 +57,11 @@ int	main(int argc, char **argv, char **envp)
 	if (!pipex_b.path)
 		ft_error(&pipex_b);
 	pipex_b.command = ft_split(pipex_b.path, ':');
-	if (!pipex_b.command)
-	{
-		ft_clean_main(pipex_b);
-		free(pipex_b.path);
-	}	
+	check_command(&pipex_b);
 	create_pipe(&pipex_b);
 	while (++ (pipex_b.num_child) < pipex_b.number_cmd)
 		ft_child(&pipex_b, argv, envp);
-	close_pipes(&pipex_b);
+	ft_close_pip(&pipex_b);
 	waitpid(-1, NULL, 0);
 	ft_clean_main(pipex_b);
 	return (0);

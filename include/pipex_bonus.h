@@ -1,5 +1,5 @@
-#ifndef PIPEX_H
-# define PIPEX_H
+#ifndef PIPEX_BONUS_H
+# define PIPEX_BONUS_H
 
 # include <unistd.h>
 # include <stdio.h>
@@ -35,18 +35,16 @@ typedef struct s_pipex
 }				t_pipex_b;
 
 char	*ft_parse_path(char **envp);
-void	ft_close(t_pipex_b *pipex);
 char	*make_cmd(char *av, char **command);
 void	ft_clean_main(t_pipex_b pipex);
 void	ft_clean_child(t_pipex_b *pipex);
-void	ft_open_fd(t_pipex_b *pipex, char *av[], int ac);
 char	**ft_split(char const *s, char c);
 char	*ft_strdup(const char *str);
 char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlen(const char *str);
 int		ft_strncmp(const char *str1, const char *str2, size_t vol);
 
-void	infile(t_pipex_b *pipex, char **av);
+void	infile(t_pipex_b *pipex, char **av, int ac);
 void	check_heredoc(t_pipex_b *pipex, char **av);
 void	outfile(t_pipex_b *pipex, char **av, int ac);
 
@@ -56,5 +54,5 @@ void	ft_dup(int fd1, int fd2);
 
 void	ft_close(t_pipex_b *pipex);
 
-void	close_pipes(t_pipex_b *pipex);
+void	ft_close_pip(t_pipex_b *pipex);
 #endif

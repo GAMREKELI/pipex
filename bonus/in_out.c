@@ -1,5 +1,11 @@
 #include "../include/pipex_bonus.h"
 
+void	ft_error_in_out(void)
+{
+	write(2, "\nError\n", 7);
+	exit(1);
+}
+
 void	outfile(t_pipex_b *pipex, char **av, int ac)
 {
 	if (pipex->here_doc == 1)
@@ -15,18 +21,28 @@ void	outfile(t_pipex_b *pipex, char **av, int ac)
 	}
 }
 
-void	infile(t_pipex_b *pipex, char **av)
+void	infile(t_pipex_b *pipex, char **av, int ac)
 {
-	if (!(ft_strncmp(av[1], "here_doc", 9)))
+	if (!ft_strncmp(av[1], "here_doc", 9))
 	{
-		pipex->here_doc = 1;
-		check_heredoc(pipex, av);
+		if (ac >= 6)
+		{
+			pipex->here_doc = 1;
+			check_heredoc(pipex, av);
+		}
+		else
+			ft_error_in_out();
 	}
 	else
 	{
-		pipex->here_doc = 0;
-		pipex->in = open(av[1], O_RDONLY);
-		if (pipex->in < 0)
-			exit(1);
+		if (ac >= 5)
+		{
+			pipex->here_doc = 0;
+			pipex->in = open(av[1], O_RDONLY);
+			if (pipex->in < 0)
+				exit(1);
+		}
+		else
+			ft_error_in_out();
 	}
 }

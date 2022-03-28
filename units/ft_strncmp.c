@@ -17,11 +17,7 @@ int	ft_strncmp(const char *str1, const char *str2, size_t vol)
 	unsigned int	i;
 	unsigned char	*string1;
 	unsigned char	*string2;
-	// int len1;
-	// int len2;
 
-	// len1 = ft_strlen(str1);
-	// len2 = ft_strlen(str2);
 	string1 = (unsigned char *)str1;
 	string2 = (unsigned char *)str2;
 	i = 0;
@@ -32,7 +28,7 @@ int	ft_strncmp(const char *str1, const char *str2, size_t vol)
 		if (string1[i] == string2[i])
 			i++;
 		else
-			return (string1[i] - string2[i]);	
+			return (string1[i] - string2[i]);
 	}
 	if (i < vol && (!string1[i] || !string2[i]))
 		return (string1[i] - string2[i]);

@@ -17,14 +17,16 @@
 # include <unistd.h>
 # include "../include/pipex_bonus.h"
 
-#define BUFFER_SIZE 100
+# define BUFFER_SIZE 100
 
-typedef	struct s_line
+typedef struct s_line
 {
-	int	fd;
+	int		fd;
+	int		kol_b;
+	char	*string;
 }				t_line;
 
-int		get_next_line(int fd, char **line);
+char	*get_next_line(int fd, char **line);
 char	*ft_strchr(const char *str, int ch);
 char	*ft_strdup(const char *str);
 size_t	ft_strlen(const char *str);

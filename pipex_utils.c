@@ -44,5 +44,8 @@ void	ft_open_fd(t_pipex *pipex, char *av[], int ac)
 	pipex->in = open(av[1], O_RDONLY);
 	pipex->out = open(av[ac - 1], O_RDWR | O_TRUNC | O_CREAT, 0777);
 	if (pipex->in < 0 || pipex->out < 0)
+	{
+		write(2, "\nError\n", 7);
 		exit(1);
+	}	
 }

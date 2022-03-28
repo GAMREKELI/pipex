@@ -65,35 +65,32 @@ char	*ft_copy_line(char *str_file)
 
 char	*ft_read_from_file(int fd, char *str_file, char *buf, t_line *res)
 {
-	int		kol_b;
-	char	*string;
-
-	kol_b = 1;
+	res->kol_b = 1;
 	buf = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buf)
 		free(str_file);
 	if (!buf)
 		return (NULL);
-	while (!ft_strchr(str_file, '\n') && kol_b > 0)
+	while (!ft_strchr(str_file, '\n') && res->kol_b > 0)
 	{
-		kol_b = read(fd, buf, BUFFER_SIZE);
-		if (kol_b == -1)
+		res->kol_b = read(fd, buf, BUFFER_SIZE);
+		if (res->kol_b == -1)
 		{
 			res->fd = -1;
 			free(buf);
 			free(str_file);
 			return (NULL);
 		}
-		buf[kol_b] = '\0';
-		string = str_file;
+		buf[res->kol_b] = '\0';
+		res->string = str_file;
 		str_file = ft_strjoin(str_file, buf);
-		free(string);
+		free(res->string);
 	}
 	free(buf);
 	return (str_file);
 }
 
-int	get_next_line(int fd, char **line)
+char	*get_next_line(int fd, char **line)
 {
 	t_line		res;
 	char		*result;
@@ -102,14 +99,14 @@ int	get_next_line(int fd, char **line)
 
 	res.fd = 0;
 	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (0);
+		return (NULL);
 	if (!(str_file))
 		str_file = ft_strdup("");
 	str_file = ft_read_from_file(fd, str_file, buf, &res);
 	if (!(str_file))
-		return (0);
+		return (NULL);
 	result = ft_copy_line(str_file);
 	str_file = ft_ost_from_line(str_file);
 	*line = result;
-	return (res.fd);
+	return (result);
 }

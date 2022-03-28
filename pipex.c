@@ -1,15 +1,31 @@
 #include "./include/pipex.h"
 
+void	check_path(t_pipex pipex)
+{
+	if (!pipex.path)
+	{
+		write(2, "\nError\n", 7);
+		exit(1);
+	}
+}
+
+void	ft_argc(int argc)
+{
+	if (argc != 5)
+	{
+		write(2, "\nError\n", 7);
+		exit(1);
+	}
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_pipex	pipex;
 
-	if (argc != 5)
-		exit(1);
+	ft_argc(argc);
 	ft_open_fd(&pipex, argv, argc);
 	pipex.path = ft_parse_path(envp);
-	if (!pipex.path)
-		exit(1);
+	check_path(pipex);
 	if (pipe(pipex.pip) < 0)
 		exit(1);
 	pipex.command = ft_split(pipex.path, ':');

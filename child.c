@@ -10,6 +10,7 @@ void	ft_child_one(t_pipex *pipex, char **av, char **envp)
 	if (!pipex->result)
 	{
 		ft_clean_child(pipex);
+		write(2, "\nCommand not found\n", 19);
 		exit(1);
 	}
 	execve(pipex->result, pipex->split_command, envp);
@@ -25,6 +26,7 @@ void	ft_child_two(t_pipex *pipex, char **av, char **envp)
 	if (!pipex->result)
 	{
 		ft_clean_child(pipex);
+		write(2, "\nCommand not found\n", 19);
 		exit(1);
 	}
 	execve(pipex->result, pipex->split_command, envp);

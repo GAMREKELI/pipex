@@ -1,6 +1,20 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: pdursley <marvin@42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2022/03/31 20:35:12 by pdursley          #+#    #+#              #
+#    Updated: 2019/07/20 20:35:12 by pdursley         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME = pipex
 
-LIST = make_cmd.c pipex.c pipex_utils.c child.c
+LIST_INCL = ./mandatory/
+
+LIST_FUNC = make_cmd.c pipex.c pipex_utils.c child.c
 
 HDR_INCL = ./include/
 
@@ -23,6 +37,8 @@ GNL_FUNC = get_next_line.c get_next_line_utils.c
 UNITS_INCL_B = ./bonus/
 
 UNITS_FUNC_B = pipex_bonus.c check_here_doc.c make_cmd_b.c in_out.c pipex_utils_b.c child_b.c
+
+LIST = ${addprefix ${LIST_INCL}, ${LIST_FUNC}}
 
 UNITS = ${addprefix ${UNITS_INCL}, ${UNITS_FUNC}}
 

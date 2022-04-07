@@ -1,9 +1,31 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipex_bonux.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pdursley <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/31 00:45:36 by pdursley          #+#    #+#             */
+/*   Updated: 2022/03/31 00:45:36 by pdursley         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/pipex_bonus.h"
 
-void	ft_dup(int fd1, int fd2)
+void	ft_dup(int fd1, int fd2, t_pipex_b *pipex)
 {
-	dup2(fd1, 0);
-	dup2(fd2, 1);
+	if (dup2(fd1, 0) < 0)
+	{
+		ft_clean_main(*pipex);
+		free(pipex->path);
+		exit(1);
+	}
+	if (dup2(fd2, 1) < 0)
+	{
+		ft_clean_main(*pipex);
+		free(pipex->path);
+		exit(1);
+	}
 }
 
 void	check_command(t_pipex_b *pipex)

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_here_doc.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pdursley <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/31 00:43:12 by pdursley          #+#    #+#             */
+/*   Updated: 2022/03/31 00:43:18 by pdursley         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/pipex_bonus.h"
 
 void	ft_unlink(t_pipex_b *pipex)
@@ -32,4 +44,6 @@ void	check_heredoc(t_pipex_b *pipex, char **av)
 	free(line);
 	close(fd_here_doc);
 	pipex->in = open(".heredoc_tmp", O_RDONLY, 0777);
+	if (!pipex->in)
+		exit(1);
 }
